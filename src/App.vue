@@ -1,17 +1,9 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <BookRide />
 </template>
 
-<script>
-import HelloWorld from "./components/PageHeader.vue";
-
-export default {
-  name: "App",
-  components: {
-    HelloWorld,
-  },
-};
+<script setup>
+import BookRide from "./views/BookRide.vue";
 </script>
 
 <style>
