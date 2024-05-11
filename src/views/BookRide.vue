@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section role="wrapper">
     <PageHeader />
     <section class="ride-page bg-fixed">
       <div
@@ -126,6 +126,67 @@
           <CarSlider />
         </section>
 
+        <section class="p-2">
+          <p class="text-end text-lightgrey text-sm font-normal">Fees</p>
+          <div class="flex flex-col gap-4">
+            <div class="flex justify-evenly items-center m-0">
+              <CustomCheckBox name="name-board" label="Name Board">
+                <img src="../assets/info-circle.png" />
+              </CustomCheckBox>
+              <p class="text-sm font-medium whitespace-nowrap">SAR 0.0</p>
+            </div>
+            <div class="flex justify-evenly items-center">
+              <CustomCheckBox name="child-seat" label="Child Seat" />
+              <p class="text-sm font-medium whitespace-nowrap">SAR 180.0</p>
+            </div>
+            <div class="flex justify-evenly items-center">
+              <CustomCheckBox name="tanfithi" label="Altanfithi Access" />
+              <p class="text-sm font-medium whitespace-nowrap">SAR 2000.0</p>
+            </div>
+            <div class="flex justify-evenly items-center">
+              <CustomCheckBox
+                name="additional"
+                label="Additional car for luggages "
+              >
+                <img src="../assets/info-circle.png" />
+              </CustomCheckBox>
+              <p class="text-sm font-medium whitespace-nowrap">SAR 150.0</p>
+            </div>
+          </div>
+
+          <div class="mx-auto rounded-lg mt-5 bg-inputField p-2">
+            <p class="text-primary text-xs">A Special Comment</p>
+            <textarea
+              class="w-full bg-inputField mx-auto"
+              maxlength="150"
+              name="textarea"
+              rows="3"
+              placeholder="Luggage information, special needs or tasks for driver"
+            />
+          </div>
+
+          <section class="Summary p-2">
+            <h2 class="font-bold mb-2">Summary</h2>
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between">
+                <p>Services cost</p>
+                <p class="text-sm font-medium whitespace-nowrap">SAR 180.0</p>
+              </div>
+              <div class="flex justify-between">
+                <p>Additions fees</p>
+                <p class="text-sm font-medium whitespace-nowrap">SAR 2000.0</p>
+              </div>
+              <div class="flex justify-between">
+                <p>Vat</p>
+                <p class="text-sm font-medium whitespace-nowrap">SAR 100.0</p>
+              </div>
+              <div class="flex justify-between font-bold">
+                <p>Total</p>
+                <p class="text-sm font-medium whitespace-nowrap">SAR 180.0</p>
+              </div>
+            </div>
+          </section>
+        </section>
         <div class="flex justify-between w-11/12 mx-auto items-center">
           <p class="text-xs">Payment Method</p>
           <div class="flex items-center">
@@ -199,5 +260,13 @@ const handleChangeDate = (updatedDate) => {
   background: url("../assets/map.png") no-repeat top center;
   background-size: cover;
   z-index: 5;
+}
+
+textarea::placeholder {
+  color: black;
+  opacity: 0.5;
+  font-size: 14px;
+  font-weight: 300;
+  white-space: nowrap;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="w-11/12 mx-auto mt-2 mb-5">
-    <label class="select-none text-sm flex gap-1">
+  <div class="w-11/12 mx-auto">
+    <label class="select-none text-sm font flex items-center gap-1">
       <span
         class="h-[25px] text-center cursor-pointer w-[25px] rounded bg-checkbox"
         :class="[checked ? 'border-[3px] border-primary bg-white' : '']"
@@ -8,6 +8,7 @@
         <img v-if="checked" src="../assets/tick-circle.png" />
       </span>
       {{ label }}
+      <slot />
       <input
         type="checkbox"
         :checked="checked"

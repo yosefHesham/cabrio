@@ -13,6 +13,7 @@ module.exports = {
         inputField: "#F6F6F6",
         card: "#B9B9B9",
         subtitle: "#494949",
+        lightgrey: "#898989",
       },
     },
   },
