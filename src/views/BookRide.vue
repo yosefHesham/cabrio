@@ -1,9 +1,9 @@
 <template>
   <section>
     <PageHeader />
-    <section class="ride-page">
+    <section class="ride-page bg-fixed">
       <div
-        class="rounded-md p-2 bg-white w-[345px] mx-auto mt-5 overflow-x-scroll"
+        class="rounded-md p-2 bg-white w-[345px] h-full mx-auto mt-5 overflow-y-scroll"
       >
         <h3 class="font-semibold text-primary">Book a Ride</h3>
 
@@ -27,20 +27,10 @@
           </div>
         </CustomDropDown>
 
-        <div class="w-11/12 mx-auto mt-2 mb-5">
-          <label class="select-none text-sm flex gap-1">
-            <span
-              class="h-[25px] text-center cursor-pointer w-[25px] rounded bg-checkbox active:bg-white active:border-black active:border-[3px]"
-            >
-            </span>
-            This ride book for another person
-            <!-- <input
-            type="checkbox"
-            checked="checked"
-            class="opacity-0 cursor-pointer h-0 w-0"
-          /> -->
-          </label>
-        </div>
+        <CustomCheckBox
+          name="for-another-person"
+          label="This ride is for another person"
+        />
 
         <CustomTextField
           v-if="!isFromAirPort"
@@ -129,12 +119,12 @@
 
         <CustomDatePicker :date="date" :changeDate="handleChangeDate" />
 
+        <CustomTextField name="Flight number"> </CustomTextField>
+
         <section class="p-2">
           <h3>Select Car Class</h3>
           <CarSlider />
         </section>
-
-        <CustomTextField name="Flight number"> </CustomTextField>
 
         <div class="flex justify-between w-11/12 mx-auto items-center">
           <p class="text-xs">Payment Method</p>
@@ -158,6 +148,7 @@ import CustomDropDown from "@/components/CustomDropDown.vue";
 import CustomTextField from "@/components/CustomTextField.vue";
 import CustomDatePicker from "@/components/CustomDatePicker.vue";
 import CarSlider from "@/components/CarSlider.vue";
+import CustomCheckBox from "@/components/CustomCheckBox.vue";
 import { Airports } from "../data";
 import { computed, ref } from "vue";
 
@@ -197,7 +188,6 @@ const isToAirport = computed(() => {
 const date = ref(new Date());
 
 const handleChangeDate = (updatedDate) => {
-  console.log("lol");
   date.value = updatedDate;
 };
 </script>
