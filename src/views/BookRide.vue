@@ -119,6 +119,13 @@
           </div>
         </div>
       </CustomDropDown>
+
+      <CustomDatePicker
+        :date="date"
+        :changeDate="handleChangeDate"
+        :changeTime="handleChangeTime"
+      />
+
       <div class="flex justify-between w-11/12 mx-auto items-center">
         <p class="text-xs">Payment Method</p>
         <div class="flex items-center">
@@ -138,6 +145,7 @@
 import PageHeader from "@/components/PageHeader.vue";
 import CustomDropDown from "@/components/CustomDropDown.vue";
 import CustomTextField from "@/components/CustomTextField.vue";
+import CustomDatePicker from "@/components/CustomDatePicker.vue";
 import { Airports } from "../airports";
 import { computed, ref } from "vue";
 
@@ -157,7 +165,6 @@ const selectRideType = (rideType) => {
 let selectedFromAirport = ref(null);
 
 const selectFromAirport = (fromAirport) => {
-  console.log(fromAirport);
   selectedFromAirport.value = fromAirport;
 };
 
@@ -174,6 +181,18 @@ const isFromAirPort = computed(() => {
 const isToAirport = computed(() => {
   return selectedRideType.value === "Airport Drop-off";
 });
+
+const date = ref(new Date());
+const time = ref("");
+
+const handleChangeDate = (updatedDate) => {
+  date.value = updatedDate.date;
+};
+
+const handleChangeTime = (updatedTime) => {
+  console.log(updatedTime, time);
+  // time.value = updatedTime;
+};
 </script>
 
 <style scoped>
