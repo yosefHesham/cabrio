@@ -5,6 +5,7 @@
     <label :for="name" class="block text-xs cursor-pointer">{{ name }}</label>
     <input
       class="rounded outline-none border-none w-full inline-block bg-inputField"
+      :value="value"
     />
 
     <slot />
@@ -17,5 +18,6 @@ import { defineProps } from "vue";
 defineProps({
   name: String,
   icon: String,
+  value: String,
 });
 </script>

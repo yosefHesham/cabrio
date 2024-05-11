@@ -1,9 +1,14 @@
 <template>
   <section role="wrapper">
     <PageHeader />
-    <section class="ride-page bg-fixed">
+    <section class="ride-page bg-fixed pt-4 relative">
+      <LocationModal
+        v-if="isFromOpened"
+        :handleShowModal="handleFromModal"
+        :handleSelectLocation="handleSetLocation"
+      />
       <div
-        class="rounded-md p-2 bg-white w-[345px] h-full mx-auto mt-5 overflow-y-scroll"
+        class="rounded-md p-2 bg-white w-[345px] h-full mx-auto overflow-y-scroll"
       >
         <h3 class="font-semibold text-primary">Book a Ride</h3>
 
@@ -34,6 +39,8 @@
 
         <CustomTextField
           v-if="!isFromAirPort"
+          @click="handleFromModal"
+          :value="location"
           name="From"
           icon="../assets/map-pin.png"
         >
@@ -157,6 +164,7 @@
           <div class="mx-auto rounded-lg mt-5 bg-inputField p-2">
             <p class="text-primary text-xs">A Special Comment</p>
             <textarea
+              wrap="hard"
               class="w-full bg-inputField mx-auto"
               maxlength="150"
               name="textarea"
@@ -210,6 +218,7 @@ import CustomTextField from "@/components/CustomTextField.vue";
 import CustomDatePicker from "@/components/CustomDatePicker.vue";
 import CarSlider from "@/components/CarSlider.vue";
 import CustomCheckBox from "@/components/CustomCheckBox.vue";
+import LocationModal from "../Modals/LocationModal.vue";
 import { Airports } from "../data";
 import { computed, ref } from "vue";
 
@@ -221,6 +230,19 @@ const rideTypes = [
 ];
 
 let selectedRideType = ref(null);
+
+const isFromOpened = ref(false);
+
+const handleFromModal = () => {
+  isFromOpened.value = !isFromOpened.value;
+};
+
+const location = ref("");
+
+const handleSetLocation = (newLocation) => {
+  handleFromModal();
+  location.value = newLocation;
+};
 
 const selectRideType = (rideType) => {
   selectedRideType.value = rideType;
@@ -267,6 +289,5 @@ textarea::placeholder {
   opacity: 0.5;
   font-size: 14px;
   font-weight: 300;
-  white-space: nowrap;
 }
 </style>
