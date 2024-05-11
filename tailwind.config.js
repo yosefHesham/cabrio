@@ -12,6 +12,7 @@ module.exports = {
         checkbox: "#F1F1F1",
         inputField: "#F6F6F6",
         card: "#B9B9B9",
+        subtitle: "#494949",
       },
     },
   },

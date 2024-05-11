@@ -4,7 +4,11 @@
     <div class="rounded-md p-2 bg-white w-[345px] mx-auto mt-5">
       <h3 class="font-semibold text-primary">Book a Ride</h3>
 
-      <CustomDropDown :selectedValue="selectedRideType" title="Ride type">
+      <CustomDropDown
+        :selectedValue="selectedRideType"
+        title="Ride type"
+        subTitle="Select type of ride"
+      >
         <div
           @click="selectRideType(rideType)"
           v-for="(rideType, index) in rideTypes"
@@ -35,30 +39,84 @@
         </label>
       </div>
 
-      <div
-        class="rounded bg-inputField w-11/12 h-12 mx-auto flex justify-evenly items-center gap-12"
+      <CustomTextField
+        v-if="!isFromAirPort"
+        name="From"
+        icon="../assets/map-pin.png"
+      >
+        <img src="../assets/map-pin.png" class="absolute top-1/4 right-2" />
+      </CustomTextField>
+
+      <CustomDropDown
+        title="From"
+        :subTitle="
+          isFromAirPort
+            ? selectedFromAirport
+              ? selectedFromAirport.airport
+              : 'Select Airport'
+            : null
+        "
+        v-if="isFromAirPort"
       >
         <div
-          class="cursor-pointer flex-1 py-1 px-6 border-[3px] border-black rounded-md text-center"
-        >
-          Pick-up
-        </div>
-        <div class="cursor-pointer flex-1 select-none">Drop-off</div>
-      </div>
-
-      <CustomDropDown title="From">
-        <div
-          @click="selectRideType(rideType)"
-          v-for="(rideType, index) in rideTypes"
+          @click="selectFromAirport(airport)"
+          v-for="(airport, index) in Airports"
           :key="index"
-          class="hover:bg-primary hover:text-white hover:rounded h-10 flex flex-col justify-center px-2"
+          class="hover:bg-primary hover:text-white hover:rounded flex flex-col justify-center px-2"
           :class="[
-            selectedRideType === rideType
+            selectFromAirport.city === airport.city
               ? 'bg-primary text-white rounded'
               : '',
           ]"
         >
-          <p class="text-lg">{{ rideType }}</p>
+          <div class="hover:text-white py-2">
+            <p class="text-lg">{{ airport.city }}</p>
+            <p class="whitespace-nowrap text-subtitle text-xs hover:text-white">
+              {{ airport.airport }}
+            </p>
+          </div>
+        </div>
+      </CustomDropDown>
+
+      <!-- to location selector-->
+
+      <CustomTextField
+        v-if="!isToAirport"
+        name="To"
+        icon="../assets/map-pin.png"
+      >
+        <img src="../assets/map-pin.png" class="absolute top-1/4 right-2" />
+      </CustomTextField>
+
+      <!-- to drop down -->
+      <CustomDropDown
+        title="To"
+        :subTitle="
+          isToAirport
+            ? selectedToAirport
+              ? selectedToAirport.airport
+              : 'Select Airport'
+            : null
+        "
+        v-if="isToAirport"
+      >
+        <div
+          @click="selectToAirport(airport)"
+          v-for="(airport, index) in Airports"
+          :key="index"
+          class="hover:bg-primary hover:text-white hover:rounded flex flex-col justify-center px-2"
+          :class="[
+            selectedToAirport?.city === airport.city
+              ? 'bg-primary text-white rounded'
+              : '',
+          ]"
+        >
+          <div>
+            <p class="text-lg">{{ airport.city }}</p>
+            <p class="whitespace-nowrap text-subtitle hover:text-white text-xs">
+              {{ airport.airport }}
+            </p>
+          </div>
         </div>
       </CustomDropDown>
       <div class="flex justify-between w-11/12 mx-auto items-center">
@@ -79,7 +137,9 @@
 <script setup>
 import PageHeader from "@/components/PageHeader.vue";
 import CustomDropDown from "@/components/CustomDropDown.vue";
-import { ref } from "vue";
+import CustomTextField from "@/components/CustomTextField.vue";
+import { Airports } from "../airports";
+import { computed, ref } from "vue";
 
 const rideTypes = [
   "Airport Pickup",
@@ -90,14 +150,30 @@ const rideTypes = [
 
 let selectedRideType = ref(null);
 
-
-
 const selectRideType = (rideType) => {
-  console.log(rideType);
   selectedRideType.value = rideType;
 };
 
+let selectedFromAirport = ref(null);
 
+const selectFromAirport = (fromAirport) => {
+  console.log(fromAirport);
+  selectedFromAirport.value = fromAirport;
+};
+
+let selectedToAirport = ref(null);
+
+const selectToAirport = (toAirport) => {
+  selectedToAirport.value = toAirport;
+};
+
+const isFromAirPort = computed(() => {
+  return selectedRideType.value === "Airport Pickup";
+});
+
+const isToAirport = computed(() => {
+  return selectedRideType.value === "Airport Drop-off";
+});
 </script>
 
 <style scoped>

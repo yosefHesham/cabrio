@@ -1,7 +1,7 @@
 <template>
   <div
     @click="toggleIsOpen"
-    class="rounded relative bg-inputField cursor-pointer flex items-center mx-auto w-11/12 px-3 justify-between h-12"
+    class="rounded relative bg-inputField cursor-pointer flex items-center mx-auto mb-5 w-11/12 px-3 justify-between h-12"
   >
     <div>
       <p class="text-primary mt-1">{{ title }}</p>
@@ -12,7 +12,7 @@
           selectedValue ? 'font-semibold' : 'opacity-50 font-thin',
         ]"
       >
-        {{ selectedValue ? selectedValue : "Select type of ride" }}
+        {{ selectedValue ? selectedValue : subTitle }}
       </p>
     </div>
 
@@ -32,6 +32,11 @@ import { ref, defineProps } from "vue";
 defineProps({
   selectedValue: String,
   title: String,
+  subTitle: String,
+  isLocationSelector: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isOpen = ref(false);
