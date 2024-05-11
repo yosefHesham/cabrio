@@ -1,10 +1,12 @@
 <template>
-  <div class="rounded bg-inputField w-11/12 h-12 flex mx-auto gap-2 mb-5">
+  <div
+    class="rounded date-picker bg-inputField w-11/12 h-12 flex mx-auto gap-2 mb-5"
+  >
     <date-picker
       ref="calendar"
       :modal-value="date"
       :min-date="new Date()"
-      @dayclick="changeDate"
+      @update:modelValue="changeDate"
       title-position="left"
       :popover="popover"
     >
@@ -14,11 +16,11 @@
           @click="togglePopover"
           transition="fade"
         >
-          <label class="block cursor-pointer" for="date">Date</label>
+          <label class="block cursor-pointer text-xs" for="date">Date</label>
 
           <div class="flex justify-between h-1/3 items-center">
             <input
-              class="bg-transparent rounded border-none w-11/12"
+              class="bg-transparent text-sm rounded border-none w-11/12"
               :value="date"
               name="date"
             />
@@ -46,8 +48,6 @@
           </button>
         </div>
       </template>
-
-      <template #day-conten> </template>
     </date-picker>
 
     <div class="border-r-2 border-black h-8 flex my-auto"></div>
@@ -57,22 +57,20 @@
       mode="time"
       hide-time-header
       @timeupdate="changeTime"
-      rows="4"
-      columns="3"
     >
       <template v-slot="{ inputValue, togglePopover }">
         <div @click="togglePopover" class="p-1">
-          <label class="block cursor-pointer" for="date">Time</label>
+          <label class="block cursor-pointer text-xs" for="date">Time</label>
 
           <div class="flex justify-between items-center h-1/3">
             <input
-              class="bg-transparent rounded border-none w-11/12"
+              class="bg-transparent text-sm rounded border-none w-11/12"
               :value="inputValue"
               @change="changeTime"
               name="time"
             />
 
-            <img src="../assets/calendar.png" alt="calendar" class="w-4 h-3" />
+            <img src="../assets/clock.png" alt="clock" class="w-4 h-3" />
           </div>
         </div>
       </template>
