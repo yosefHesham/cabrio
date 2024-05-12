@@ -194,8 +194,8 @@
           <div class="w-full px-4 pb-3 mt-4">
             <button
               type="submit"
-              class="bg-primary text-white font-bold w-full px-3 py-1 rounded-md"
-              :class="[!meta.valid ? 'bg-gray-500' : '']"
+              class="text-white font-bold w-full px-3 py-1 rounded-md"
+              :class="[!meta.valid ? 'bg-gray-500' : 'bg-primary']"
               :disabled="!meta.valid"
             >
               Submit
