@@ -321,6 +321,21 @@ textarea::placeholder {
   font-weight: 300;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  margin-left: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 10px;
+}
+
 .payment {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   cursor: pointer;
