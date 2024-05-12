@@ -1,7 +1,6 @@
 <template>
   <section role="wrapper">
     <PageHeader :showPopOver="handleProfilePopOver" />
-    <!-- <ProfilePopover v-if="showProfilePopOver" /> -->
     <section class="ride-page bg-fixed pt-4 relative">
       <LocationModal
         v-if="isFromOpened"
@@ -19,7 +18,7 @@
         class="h-full w-[345px] mx-auto lg:w-[418px] lg:ml-[13%] rounded-xl bg-white"
       >
         <div class="overflow-y-scroll rounded-md p-2 h-5/6">
-          <h3 class="font-semibold text-primary">Book a Ride</h3>
+          <h3 class="font-semibold ml-4 mb-2 mt-4 text-primary">Book a Ride</h3>
 
           <CustomDropDown
             :selectedValue="selectedRideType"
@@ -44,7 +43,10 @@
           <CustomCheckBox
             name="for-another-person"
             label="This ride is for another person"
+            class="mb-5"
           />
+
+          <!-- from airports location -->
 
           <CustomTextField
             v-if="!isFromAirPort"
@@ -56,25 +58,22 @@
             <img src="../assets/map-pin.png" class="absolute top-1/4 right-2" />
           </CustomTextField>
 
+          <!-- from location dropdown -->
           <CustomDropDown
             title="From"
             :value="location"
-            :subTitle="
-              isFromAirPort
-                ? selectedFromAirport
-                  ? selectedFromAirport.airport
-                  : 'Select Airport'
-                : null
-            "
+            :selectedValue="selectedFromAirport?.airport"
+            subTitle="Select Airport"
             v-if="isFromAirPort"
           >
             <div
               @click="selectFromAirport(airport)"
+              :selectedValue="selectedFromAirport?.airport"
               v-for="(airport, index) in Airports"
               :key="index"
-              class="hover:bg-primary hover:text-white hover:rounded flex flex-col justify-center px-2"
+              class="hover:bg-primary hover:text-white hover:rounded flex flex-col justify-center p-2"
               :class="[
-                selectFromAirport.city === airport.city
+                selectedFromAirport?.city === airport.city
                   ? 'bg-primary text-white rounded'
                   : '',
               ]"
@@ -105,27 +104,23 @@
           <!-- to drop down -->
           <CustomDropDown
             title="To"
-            :subTitle="
-              isToAirport
-                ? selectedToAirport
-                  ? selectedToAirport.airport
-                  : 'Select Airport'
-                : null
-            "
+            :selectedValue="selectedToAirport?.airport"
+            subTitle="Select Airport"
             v-if="isToAirport"
           >
             <div
               @click="selectToAirport(airport)"
+              :selectedValue="selectedToAirport?.airport"
               v-for="(airport, index) in Airports"
               :key="index"
-              class="hover:bg-primary hover:text-white hover:rounded flex flex-col justify-center px-2"
+              class="hover:bg-primary hover:text-white hover:rounded flex flex-col justify-center p-2"
               :class="[
                 selectedToAirport?.city === airport.city
                   ? 'bg-primary text-white rounded'
                   : '',
               ]"
             >
-              <div>
+              <div class="hover:text-white py-2">
                 <p class="text-lg">{{ airport.city }}</p>
                 <p
                   class="whitespace-nowrap text-subtitle hover:text-white text-xs"
@@ -141,8 +136,13 @@
           <CustomTextField name="Flight number"> </CustomTextField>
 
           <section class="p-2">
-            <h3>Select Car Class</h3>
-            <CarSlider />
+            <h2 class="font-semibold ml-5 mb-2">Select Car Class</h2>
+            <div class="lg:hidden">
+              <CarSlider :itemsToShow="1.5" />
+            </div>
+            <div class="lg:block hidden">
+              <CarSlider :itemsToShow="2.015" />
+            </div>
           </section>
 
           <section class="p-2">
@@ -246,13 +246,6 @@ import CustomCheckBox from "@/components/CustomCheckBox.vue";
 import LocationModal from "../Modals/LocationModal.vue";
 import { Airports } from "../data";
 import { computed, ref } from "vue";
-// import ProfilePopover from "../components/ProfilePopover.vue";
-
-// const showProfilePopOver = ref(false);
-
-// const handleProfilePopOver = () => {
-//   showProfilePopOver.value = !showProfilePopOver.value;
-// };
 
 const rideTypes = [
   "Airport Pickup",
@@ -330,5 +323,6 @@ textarea::placeholder {
 
 .payment {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  cursor: pointer;
 }
 </style>

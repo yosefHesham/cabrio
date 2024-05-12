@@ -1,5 +1,5 @@
 <template>
-  <Carousel :items-to-show="1.5">
+  <Carousel :items-to-show="itemsToShow">
     <slide v-for="(car, index) in cars" :key="index">
       <CarCard
         :carClass="car.carClass"
@@ -25,8 +25,12 @@ import { Carousel, Slide } from "vue3-carousel";
 import CarCard from "./CarCard.vue";
 import { ref } from "vue";
 import { Cars } from "../data";
+import { defineProps } from "vue";
 
 const cars = ref(Cars);
+defineProps({
+  itemsToShow: Number,
+});
 
 let selectedCar = ref({});
 

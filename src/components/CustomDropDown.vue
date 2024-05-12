@@ -4,15 +4,12 @@
     class="rounded relative bg-inputField cursor-pointer flex items-center mx-auto mb-5 w-11/12 px-3 justify-between h-12"
   >
     <div>
-      <p class="text-primary mt-1">{{ title }}</p>
-      <p
-        :v-show="selectedValue === null"
-        :class="[
-          'text-primary',
-          selectedValue ? 'font-semibold' : 'opacity-50 font-thin',
-        ]"
-      >
-        {{ selectedValue ? selectedValue : subTitle }}
+      <p class="text-primary mt-1 text-xs">{{ title }}</p>
+      <p class="text-sm font-medium" v-show="selectedValue">
+        {{ selectedValue }}
+      </p>
+      <p v-show="!selectedValue" class="font-thin opacity-50">
+        {{ subTitle }}
       </p>
     </div>
 
