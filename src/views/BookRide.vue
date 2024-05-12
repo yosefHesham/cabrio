@@ -15,7 +15,9 @@
         :handleSelectLocation="handleSetLocation"
       />
 
-      <section class="h-full w-[345px] mx-auto rounded-md bg-white">
+      <section
+        class="h-full w-[345px] mx-auto lg:w-[418px] lg:ml-[13%] rounded-xl bg-white"
+      >
         <div class="overflow-y-scroll rounded-md p-2 h-5/6">
           <h3 class="font-semibold text-primary">Book a Ride</h3>
 
