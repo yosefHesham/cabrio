@@ -19,31 +19,39 @@
         :handleShowModal="handlePaymentModal"
       />
 
-      <section
+      <form
+        :validation-schema="schema"
+        @submit="onSubmit"
+        @invalid-submit="
+          (e) => {
+            console.log('error', e);
+          }
+        "
         class="h-full w-[345px] mx-auto lg:w-[418px] lg:ml-[13%] rounded-xl bg-white"
       >
         <div class="overflow-y-scroll rounded-md p-2 h-5/6">
           <h3 class="font-semibold ml-4 mb-2 mt-4 text-primary">Book a Ride</h3>
-
-          <CustomDropDown
-            :selectedValue="selectedRideType"
-            title="Ride type"
-            subTitle="Select type of ride"
-          >
-            <div
-              @click="selectRideType(rideType)"
-              v-for="(rideType, index) in rideTypes"
-              :key="index"
-              class="hover:bg-primary hover:text-white hover:rounded h-10 flex flex-col justify-center px-2"
-              :class="[
-                selectedRideType === rideType
-                  ? 'bg-primary text-white rounded'
-                  : '',
-              ]"
+          <div>
+            <CustomDropDown
+              title="Ride type"
+              name="rideType"
+              subTitle="Select type of ride"
             >
-              <p class="text-lg">{{ rideType }}</p>
-            </div>
-          </CustomDropDown>
+              <div
+                @click="selectRideType(rideType)"
+                v-for="(rideType, index) in rideTypes"
+                :key="index"
+                class="hover:bg-primary hover:text-white hover:rounded h-10 flex flex-col justify-center px-2"
+                :class="[
+                  selectedRideType === rideType
+                    ? 'bg-primary text-white rounded'
+                    : '',
+                ]"
+              >
+                <p class="text-lg">{{ rideType }}</p>
+              </div>
+            </CustomDropDown>
+          </div>
 
           <CustomCheckBox
             name="for-another-person"
@@ -57,7 +65,8 @@
             v-if="!isFromAirPort"
             @click="handleFromModal"
             :value="location"
-            name="From"
+            title="From"
+            name="from"
             icon="../assets/map-pin.png"
           >
             <img src="../assets/map-pin.png" class="absolute top-1/4 right-2" />
@@ -66,8 +75,7 @@
           <!-- from location dropdown -->
           <CustomDropDown
             title="From"
-            :value="location"
-            :selectedValue="selectedFromAirport?.airport"
+            name="from"
             subTitle="Select Airport"
             v-if="isFromAirPort"
           >
@@ -98,7 +106,8 @@
 
           <CustomTextField
             v-if="!isToAirport"
-            name="To"
+            title="To"
+            name="to"
             :value="location"
             icon="../assets/map-pin.png"
             @click="handleToModal"
@@ -109,13 +118,12 @@
           <!-- to drop down -->
           <CustomDropDown
             title="To"
-            :selectedValue="selectedToAirport?.airport"
+            name="to"
             subTitle="Select Airport"
             v-if="isToAirport"
           >
             <div
               @click="selectToAirport(airport)"
-              :selectedValue="selectedToAirport?.airport"
               v-for="(airport, index) in Airports"
               :key="index"
               class="hover:bg-primary hover:text-white hover:rounded flex flex-col justify-center p-2"
@@ -138,7 +146,7 @@
 
           <CustomDatePicker :date="date" :changeDate="handleChangeDate" />
 
-          <CustomTextField name="Flight number"> </CustomTextField>
+          <CustomTextField title="Flight number" name="flightNumber" />
 
           <section class="p-2">
             <h2 class="font-semibold ml-5 mb-2">Select Car Class</h2>
@@ -151,75 +159,27 @@
           </section>
 
           <section class="p-2">
-            <p class="text-end text-lightgrey text-sm font-normal">Fees</p>
-            <div class="flex flex-col gap-4">
-              <div class="flex justify-evenly items-center m-0">
-                <CustomCheckBox name="name-board" label="Name Board">
-                  <img src="../assets/info-circle.png" />
-                </CustomCheckBox>
-                <p class="text-sm font-medium whitespace-nowrap">SAR 0.0</p>
-              </div>
-              <div class="flex justify-evenly items-center">
-                <CustomCheckBox name="child-seat" label="Child Seat" />
-                <p class="text-sm font-medium whitespace-nowrap">SAR 180.0</p>
-              </div>
-              <div class="flex justify-evenly items-center">
-                <CustomCheckBox name="tanfithi" label="Altanfithi Access" />
-                <p class="text-sm font-medium whitespace-nowrap">SAR 2000.0</p>
-              </div>
-              <div class="flex justify-evenly items-center">
-                <CustomCheckBox
-                  name="additional"
-                  label="Additional car for luggages "
-                >
-                  <img src="../assets/info-circle.png" />
-                </CustomCheckBox>
-                <p class="text-sm font-medium whitespace-nowrap">SAR 150.0</p>
-              </div>
-            </div>
-
+            <FeesSection />
             <div class="mx-auto rounded-lg mt-5 bg-inputField p-2">
               <p class="text-primary text-xs">A Special Comment</p>
               <textarea
                 wrap="hard"
                 class="w-full bg-inputField mx-auto"
                 maxlength="150"
-                name="textarea"
+                name="specialComment"
                 rows="3"
                 placeholder="Luggage information, special needs or tasks for driver"
               />
             </div>
 
-            <section class="Summary p-2">
-              <h2 class="font-bold mb-2">Summary</h2>
-              <div class="flex flex-col gap-2">
-                <div class="flex justify-between">
-                  <p>Services cost</p>
-                  <p class="text-sm font-medium whitespace-nowrap">SAR 180.0</p>
-                </div>
-                <div class="flex justify-between">
-                  <p>Additions fees</p>
-                  <p class="text-sm font-medium whitespace-nowrap">
-                    SAR 2000.0
-                  </p>
-                </div>
-                <div class="flex justify-between">
-                  <p>Vat</p>
-                  <p class="text-sm font-medium whitespace-nowrap">SAR 100.0</p>
-                </div>
-                <div class="flex justify-between font-bold">
-                  <p>Total</p>
-                  <p class="text-sm font-medium whitespace-nowrap">SAR 180.0</p>
-                </div>
-              </div>
-            </section>
+            <SummarySection />
           </section>
         </div>
-        <section
-          class="mt-2 payment rounded-br-lg rounded-bl-lg p-2"
-          @click="handlePaymentModal"
-        >
-          <div class="flex justify-between w-11/12 mx-auto items-center">
+        <section class="mt-2 payment rounded-br-lg rounded-bl-lg p-2">
+          <div
+            class="flex justify-between w-11/12 mx-auto items-center"
+            @click="handlePaymentModal"
+          >
             <p class="text-xs">Payment Method</p>
             <div class="flex items-center">
               <p class="text-xs font-semibold">Balance.SAR 20,450,00</p>
@@ -233,13 +193,15 @@
 
           <div class="w-full px-4 pb-3 mt-4">
             <button
+              type="submit"
               class="bg-primary text-white font-bold w-full px-3 py-1 rounded-md"
+              :disabled="!meta.valid"
             >
               Submit
             </button>
           </div>
         </section>
-      </section>
+      </form>
     </section>
   </section>
 </template>
@@ -253,9 +215,19 @@ import CarSlider from "@/components/CarSlider.vue";
 import CustomCheckBox from "@/components/CustomCheckBox.vue";
 import LocationModal from "../Modals/LocationModal.vue";
 import PaymentModal from "@/Modals/PaymentModal.vue";
+import FeesSection from "@/components/FeesSection.vue";
 import { Airports } from "../data";
 import { computed, ref } from "vue";
+import { useForm } from "vee-validate";
+import { schema } from "@/formSchema";
 
+const { handleSubmit, setFieldValue, meta } = useForm({
+  validationSchema: schema,
+});
+
+const onSubmit = handleSubmit(() => {
+  handlePaymentModal();
+});
 const rideTypes = [
   "Airport Pickup",
   "Airport Drop-off",
@@ -283,19 +255,29 @@ const handleToModal = () => {
   isToOpened.value = !isToOpened.value;
 };
 
-const location = ref("");
-
 const handleSetLocation = (newLocation) => {
-  location.value = newLocation;
+  if (selectedRideType.value === "Airport Pickup") {
+    setFieldValue("to", newLocation);
+  } else if (selectedRideType.value === "Airport Drop-off") {
+    setFieldValue("from", newLocation);
+  } else {
+    setFieldValue("to", newLocation);
+    setFieldValue("from", newLocation);
+  }
 };
 
 const selectRideType = (rideType) => {
+  setFieldValue("rideType", rideType);
+
   selectedRideType.value = rideType;
 };
 
 let selectedFromAirport = ref(null);
 
 const selectFromAirport = (fromAirport) => {
+  const { city, airport } = fromAirport;
+  const from = airport + ", " + city;
+  setFieldValue("from", from);
   selectedFromAirport.value = fromAirport;
 };
 
@@ -303,6 +285,9 @@ let selectedToAirport = ref(null);
 
 const selectToAirport = (toAirport) => {
   selectedToAirport.value = toAirport;
+  const { city, airport } = toAirport;
+  const to = airport + ", " + city;
+  setFieldValue("to", to);
 };
 
 const isFromAirPort = computed(() => {
@@ -316,7 +301,7 @@ const isToAirport = computed(() => {
 const date = ref(new Date());
 
 const handleChangeDate = (updatedDate) => {
-  date.value = updatedDate;
+  setFieldValue("date", updatedDate);
 };
 </script>
 

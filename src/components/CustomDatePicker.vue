@@ -21,7 +21,7 @@
           <div class="flex justify-between h-1/3 items-center">
             <input
               class="bg-transparent text-sm rounded border-none w-11/12"
-              :value="date"
+              :value="inputValue"
               name="date"
             />
 
@@ -75,17 +75,25 @@
         </div>
       </template>
     </date-picker>
+    <p class="text-red-600 mx-auto" v-show="errorMessage">
+      {{ errorMessage }}
+    </p>
   </div>
 </template>
 
 <script setup>
 import { defineProps, ref } from "vue";
 import { DatePicker } from "v-calendar";
+import { useField } from "vee-validate";
 
-defineProps({
+const props = defineProps({
   date: Date,
   changeDate: Function,
   changeTime: Function,
+});
+
+const { errorMessage, value: inputValue } = useField("date", undefined, {
+  initialValue: props.date,
 });
 
 const popover = ref({
