@@ -1,6 +1,7 @@
 <template>
   <section role="wrapper">
-    <PageHeader />
+    <PageHeader :showPopOver="handleProfilePopOver" />
+    <!-- <ProfilePopover v-if="showProfilePopOver" /> -->
     <section class="ride-page bg-fixed pt-4 relative">
       <LocationModal
         v-if="isFromOpened"
@@ -243,6 +244,13 @@ import CustomCheckBox from "@/components/CustomCheckBox.vue";
 import LocationModal from "../Modals/LocationModal.vue";
 import { Airports } from "../data";
 import { computed, ref } from "vue";
+// import ProfilePopover from "../components/ProfilePopover.vue";
+
+// const showProfilePopOver = ref(false);
+
+// const handleProfilePopOver = () => {
+//   showProfilePopOver.value = !showProfilePopOver.value;
+// };
 
 const rideTypes = [
   "Airport Pickup",

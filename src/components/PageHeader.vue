@@ -2,6 +2,8 @@
   <header
     class="flex w-full justify-between bg bg-primary items-center h-12 md:h-16"
   >
+    <ProfilePopover v-if="showProfilePopOver" />
+
     <div class="flex gap-14 items-center">
       <div class="flex items-center gap-3 ml-4">
         <img
@@ -51,6 +53,7 @@
         <img
           src="../assets/light-arrow-down.png"
           class="cursor-pointer ml-auto"
+          @click="handleProfilePopOver"
         />
       </div>
     </div>
@@ -58,7 +61,16 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+
+import ProfilePopover from "./ProfilePopover.vue";
 const navItems = ["Company Profile", "Book a Ride", "Rides"];
+
+const showProfilePopOver = ref(false);
+
+const handleProfilePopOver = () => {
+  showProfilePopOver.value = !showProfilePopOver.value;
+};
 </script>
 <style scoped>
 p {
