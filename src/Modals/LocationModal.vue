@@ -1,8 +1,8 @@
 <template>
   <div
-    class="fixed w-full z-10 top-0 flex justify-center items-center bg-primary bg-opacity-40 h-full"
+    class="fixed w-full z-10 top-0 flex justify-center items-center bg-white bg-opacity-60 h-full"
   >
-    <div class="bg-white w-11/12 md:w-2/3 rounded-lg p-4">
+    <div class="bg-white shadow-2xl w-11/12 md:w-2/3 rounded-lg p-4">
       <div class="text-start">
         <img
           src="../assets/close.png"
