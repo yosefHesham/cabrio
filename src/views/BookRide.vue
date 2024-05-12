@@ -14,6 +14,11 @@
         :handleSelectLocation="handleSetLocation"
       />
 
+      <PaymentModal
+        v-if="showPaymentModal"
+        :handleShowModal="handlePaymentModal"
+      />
+
       <section
         class="h-full w-[345px] mx-auto lg:w-[418px] lg:ml-[13%] rounded-xl bg-white"
       >
@@ -210,7 +215,10 @@
             </section>
           </section>
         </div>
-        <section class="mt-2 payment rounded-br-lg rounded-bl-lg p-2">
+        <section
+          class="mt-2 payment rounded-br-lg rounded-bl-lg p-2"
+          @click="handlePaymentModal"
+        >
           <div class="flex justify-between w-11/12 mx-auto items-center">
             <p class="text-xs">Payment Method</p>
             <div class="flex items-center">
@@ -244,6 +252,7 @@ import CustomDatePicker from "@/components/CustomDatePicker.vue";
 import CarSlider from "@/components/CarSlider.vue";
 import CustomCheckBox from "@/components/CustomCheckBox.vue";
 import LocationModal from "../Modals/LocationModal.vue";
+import PaymentModal from "@/Modals/PaymentModal.vue";
 import { Airports } from "../data";
 import { computed, ref } from "vue";
 
@@ -255,6 +264,12 @@ const rideTypes = [
 ];
 
 let selectedRideType = ref(null);
+
+const showPaymentModal = ref(false);
+
+const handlePaymentModal = () => {
+  showPaymentModal.value = !showPaymentModal.value;
+};
 
 const isFromOpened = ref(false);
 
